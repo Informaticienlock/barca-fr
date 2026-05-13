@@ -1,24 +1,119 @@
 'use client'
+import { useState } from 'react'
+
+const navLinks = [
+  { label: 'Actualités', href: '#' },
+  { label: 'Avant-matchs', href: '#' },
+  { label: 'Analyses', href: '#' },
+  { label: 'Transferts', href: '#' },
+  { label: 'Effectif', href: '#' },
+]
+
 export default function Header() {
+  const [open, setOpen] = useState(false)
+
   return (
-    <header style={{background:'rgba(10,15,30,0.95)',backdropFilter:'blur(12px)',borderBottom:'1px solid var(--barca-border)',position:'sticky',top:0,zIndex:100}}>
-      <div style={{maxWidth:'1280px',margin:'0 auto',padding:'0 24px',height:'64px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-        <a href="/" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:'12px'}}>
-          <div style={{width:'36px',height:'36px',background:'linear-gradient(135deg,var(--barca-blue),var(--barca-red))',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:900,fontSize:'12px',color:'white'}}>FCB</div>
-          <div>
-            <div style={{fontFamily:'Playfair Display,serif',fontWeight:900,fontSize:'1.1rem',color:'white'}}>Barça <span style={{color:'var(--barca-gold)'}}>Infos</span></div>
-            <div style={{fontSize:'10px',color:'rgba(255,255,255,0.4)',letterSpacing:'0.1em',textTransform:'uppercase'}}>L&apos;actualité du FC Barcelone</div>
+    <>
+      <header style={{
+        background: 'rgba(8,13,26,0.92)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: '1px solid var(--barca-border)',
+        position: 'sticky', top: 0, zIndex: 100,
+      }}>
+        {/* Barre couleur Barça en haut */}
+        <div style={{ height: '3px', background: 'linear-gradient(to right, var(--barca-blue) 0%, var(--barca-red) 50%, var(--barca-gold) 100%)' }} />
+
+        <div style={{
+          maxWidth: '1280px', margin: '0 auto', padding: '0 24px',
+          height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        }}>
+
+          {/* Logo */}
+          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '11px' }}>
+            <div style={{
+              width: '34px', height: '34px',
+              background: 'linear-gradient(135deg, var(--barca-blue) 0%, var(--barca-red) 100%)',
+              borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontWeight: 900, fontSize: '11px', color: 'white',
+              fontFamily: 'Playfair Display, serif',
+              flexShrink: 0,
+              boxShadow: '0 2px 12px rgba(165,0,68,0.35)',
+            }}>FCB</div>
+            <div>
+              <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 900, fontSize: '1.05rem', lineHeight: 1 }}>
+                <span className="logo-text">Barça </span>
+                <span className="logo-accent">Infos</span>
+              </div>
+              <div style={{ fontSize: '9px', color: 'var(--text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase', marginTop: '2px' }}>
+                L&apos;actualité du FC Barcelone
+              </div>
+            </div>
+          </a>
+
+          {/* Nav desktop */}
+          <nav className="desktop-nav" style={{ display: 'flex', gap: '28px', alignItems: 'center' }}>
+            {navLinks.map(l => <a key={l.label} href={l.href} className="nav-link">{l.label}</a>)}
+          </nav>
+
+          {/* Live + burger */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              background: 'var(--barca-red)',
+              color: 'white', fontSize: '10px', fontWeight: 700,
+              letterSpacing: '0.1em', padding: '5px 11px', borderRadius: '2px',
+              display: 'flex', alignItems: 'center', gap: '6px',
+            }}>
+              <span className="live-dot" />
+              EN DIRECT
+            </div>
+
+            {/* Burger mobile */}
+            <button
+              className="mobile-menu-btn"
+              onClick={() => setOpen(!open)}
+              style={{
+                display: 'none', background: 'none', border: 'none', cursor: 'pointer',
+                flexDirection: 'column', gap: '5px', padding: '4px',
+              }}
+            >
+              {[0,1,2].map(i => (
+                <span key={i} style={{
+                  display: 'block', width: '22px', height: '2px',
+                  background: 'white', borderRadius: '1px',
+                  transition: 'all 0.25s',
+                  transform: open
+                    ? i === 0 ? 'rotate(45deg) translate(5px,5px)'
+                    : i === 2 ? 'rotate(-45deg) translate(5px,-5px)'
+                    : 'scaleX(0)'
+                    : 'none',
+                }} />
+              ))}
+            </button>
           </div>
-        </a>
-        <nav style={{display:'flex',gap:'32px'}}>
-          {['Actualités','Avant-matchs','Analyses','Transferts','Effectif'].map(l=>(
-            <a key={l} href="#" className="nav-link">{l}</a>
-          ))}
-        </nav>
-        <div style={{background:'var(--barca-red)',color:'white',fontSize:'11px',fontWeight:600,letterSpacing:'0.08em',padding:'5px 12px',borderRadius:'2px',display:'flex',alignItems:'center',gap:'6px'}}>
-          <span style={{width:'6px',height:'6px',background:'white',borderRadius:'50%'}}/>EN DIRECT
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Menu mobile */}
+      {open && (
+        <div style={{
+          position: 'fixed', top: '63px', left: 0, right: 0, zIndex: 99,
+          background: 'rgba(8,13,26,0.98)',
+          backdropFilter: 'blur(16px)',
+          borderBottom: '1px solid var(--barca-border)',
+          padding: '16px 24px 24px',
+        }}>
+          {navLinks.map(l => (
+            <a key={l.label} href={l.href} style={{
+              display: 'block', padding: '14px 0',
+              borderBottom: '1px solid var(--barca-border)',
+              fontSize: '15px', fontWeight: 500,
+              color: 'var(--text-secondary)', textDecoration: 'none',
+            }}>{l.label}</a>
+          ))}
+        </div>
+      )}
+    </>
   )
 }
