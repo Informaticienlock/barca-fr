@@ -8,8 +8,9 @@ export const metadata: Metadata = {
   },
   description: 'Le média français de référence sur le FC Barcelone. Actualités, transferts, analyses et avant-matchs — toujours en premier.',
   keywords: ['FC Barcelone', 'Barça', 'actualité Barça', 'Liga', 'Champions League', 'transferts Barça'],
-  authors: [{ name: 'Barça Infos' }],
-  creator: 'Barça Infos',
+  verification: {
+    google: 'Xdn9vCP3gZxGX31ckxS0vyKDfrXXEtoLW20G2DmjLN8',
+  },
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
@@ -19,9 +20,7 @@ export const metadata: Metadata = {
     description: 'Le média français de référence sur le FC Barcelone.',
     images: [{
       url: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1200&q=80',
-      width: 1200,
-      height: 630,
-      alt: 'Barça Infos',
+      width: 1200, height: 630, alt: 'Barça Infos',
     }],
   },
   twitter: {
@@ -30,16 +29,7 @@ export const metadata: Metadata = {
     description: 'Le média français de référence sur le FC Barcelone.',
     images: ['https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1200&q=80'],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+  robots: { index: true, follow: true },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
