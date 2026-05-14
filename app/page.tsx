@@ -10,18 +10,27 @@ export default function Home() {
     <main style={{ minHeight: '100vh', background: 'var(--barca-dark)' }}>
       <Header />
       <Ticker />
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
-        <section style={{ marginTop: '40px' }}>
+
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px' }}>
+        <section style={{ marginTop: '32px' }}>
           <HeroArticle />
         </section>
-        <div style={{ marginTop: '56px', marginBottom: '28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h2 className="section-title"><span className="stripe" />Dernières actualités</h2>
+
+        <div style={{ marginTop: '48px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <h2 className="section-title">Dernières actualités</h2>
           <a href="#" style={{ fontSize: '13px', color: 'var(--barca-blue)', fontWeight: 500 }}>Tout voir →</a>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '40px', alignItems: 'start' }}>
-          <ArticleGrid />
-          <Sidebar />
+
+        {/* Wrapper responsive */}
+        <div className="page-layout">
+          <div className="articles-section">
+            <ArticleGrid />
+          </div>
+          <div className="sidebar-section">
+            <Sidebar />
+          </div>
         </div>
+
       </div>
       <Footer />
     </main>
