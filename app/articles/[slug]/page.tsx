@@ -18,8 +18,9 @@ function formatDate(d: string) {
   return new Date(d).toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'})
 }
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
-  const article = await client.fetch(articleQuery, { slug: params.slug })
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const article = await client.fetch(articleQuery, { slug })
 
   if (!article) notFound()
 
@@ -32,16 +33,12 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       <Header />
       <div style={{maxWidth:'780px',margin:'0 auto',padding:'48px 24px 80px'}}>
 
-        {/* Breadcrumb */}
         <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'28px',fontSize:'12px',fontFamily:'DM Mono,monospace',color:'var(--text-muted)'}}>
           <a href="/" style={{color:'var(--text-muted)',textDecoration:'none'}}>Accueil</a>
           <span>›</span>
-          <a href="#" style={{color:'var(--text-muted)',textDecoration:'none'}}>{article.categorie}</a>
-          <span>›</span>
-          <span style={{color:'var(--text-secondary)'}}>{article.titre?.slice(0,40)}...</span>
+          <span style={{color:'var(--text-secondary)'}}>{article.categorie}</span>
         </div>
 
-        {/* Badge + meta */}
         <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'20px'}}>
           <span className={`badge ${getBadge(article.categorie)}`}>{article.categorie}</span>
           {article.datePublication && (
@@ -51,19 +48,16 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           )}
         </div>
 
-        {/* Titre */}
         <h1 style={{fontFamily:'Playfair Display,serif',fontSize:'clamp(1.9rem,4vw,2.8rem)',fontWeight:900,color:'white',lineHeight:1.1,marginBottom:'24px'}}>
           {article.titre}
         </h1>
 
-        {/* Extrait */}
         {article.extrait && (
-          <p style={{fontSize:'1.1rem',color:'var(--text-secondary)',lineHeight:1.7,marginBottom:'28px',fontStyle:'italic',borderLeft:'3px solid var(--barca-blue)',paddingLeft:'16px'}}>
+          <p style={{fontSize:'1.1rem',color:'var(--text-secondary)',lineHeight:1.7,marginBottom:'28px',borderLeft:'3px solid var(--barca-blue)',paddingLeft:'16px'}}>
             {article.extrait}
           </p>
         )}
 
-        {/* Auteur */}
         <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'36px',paddingBottom:'28px',borderBottom:'1px solid var(--barca-border)'}}>
           <div style={{width:'42px',height:'42px',background:'linear-gradient(135deg,var(--barca-blue),var(--barca-red))',borderRadius:'50%',flexShrink:0}}/>
           <div>
@@ -72,14 +66,8 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           </div>
         </div>
 
-        {/* Image principale */}
-        <img
-          src={img}
-          alt={article.titre}
-          style={{width:'100%',height:'420px',objectFit:'cover',borderRadius:'6px',marginBottom:'40px',display:'block'}}
-        />
+        <img src={img} alt={article.titre} style={{width:'100%',height:'420px',objectFit:'cover',borderRadius:'6px',marginBottom:'40px',display:'block'}}/>
 
-        {/* Contenu */}
         {article.contenu && (
           <div style={{fontSize:'1.05rem',lineHeight:1.85,color:'var(--text-secondary)'}}>
             <PortableText
@@ -97,16 +85,16 @@ export default async function ArticlePage({ params }: { params: { slug: string }
                 },
                 marks: {
                   strong: ({children}) => <strong style={{color:'white',fontWeight:700}}>{children}</strong>,
-                  em: ({children}) => <em style={{fontStyle:'italic'}}>{children}</em>,
+                  em: ({children}) => <em>{children}</em>,
+                  link: ({value, children}) => <a href={value?.href} style={{color:'var(--barca-blue)',textDecoration:'underline'}}>{children}</a>,
                 },
               }}
             />
           </div>
         )}
 
-        {/* Tags */}
         <div style={{display:'flex',gap:'8px',flexWrap:'wrap',marginTop:'48px',paddingTop:'28px',borderTop:'1px solid var(--barca-border)'}}>
-          {['Barça','FC Barcelone', article.categorie].filter(Boolean).map(tag=>(
+          {['Barça', article.categorie].filter(Boolean).map((tag: string) => (
             <span key={tag} style={{fontSize:'11px',fontFamily:'DM Mono,monospace',color:'var(--text-muted)',background:'rgba(255,255,255,0.04)',border:'1px solid var(--barca-border)',padding:'4px 12px',borderRadius:'2px'}}>
               #{tag}
             </span>

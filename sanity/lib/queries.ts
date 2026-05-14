@@ -1,6 +1,6 @@
-import { defineQuery } from 'next-sanity'
+import { groq } from 'next-sanity'
 
-export const articlesQuery = defineQuery(`
+export const articlesQuery = groq`
   *[_type == "article"] | order(datePublication desc) {
     _id,
     titre,
@@ -11,9 +11,9 @@ export const articlesQuery = defineQuery(`
     auteur,
     datePublication
   }
-`)
+`
 
-export const articleQuery = defineQuery(`
+export const articleQuery = groq`
   *[_type == "article" && slug.current == $slug][0] {
     _id,
     titre,
@@ -25,4 +25,4 @@ export const articleQuery = defineQuery(`
     auteur,
     datePublication
   }
-`)
+`
