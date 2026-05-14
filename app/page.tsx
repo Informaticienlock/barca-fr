@@ -12,6 +12,7 @@ export default function Home() {
       <Ticker />
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px' }}>
+
         <section style={{ marginTop: '32px' }}>
           <HeroArticle />
         </section>
@@ -21,14 +22,16 @@ export default function Home() {
           <a href="#" style={{ fontSize: '13px', color: 'var(--barca-blue)', fontWeight: 500 }}>Tout voir →</a>
         </div>
 
-        {/* Wrapper responsive */}
-        <div className="page-layout">
-          <div className="articles-section">
-            <ArticleGrid />
-          </div>
-          <div className="sidebar-section">
-            <Sidebar />
-          </div>
+        {/* Desktop : articles + sidebar côte à côte */}
+        <div className="desktop-layout">
+          <ArticleGrid />
+          <Sidebar />
+        </div>
+
+        {/* Mobile : articles puis sidebar en dessous */}
+        <div className="mobile-layout">
+          <ArticleGrid />
+          <Sidebar />
         </div>
 
       </div>
