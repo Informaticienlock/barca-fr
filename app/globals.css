@@ -309,3 +309,20 @@ blockquote {
     display: none;
   }
 }
+
+/* Articles 2 colonnes sur mobile aussi */
+@media (max-width: 1023px) {
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .articles-grid .article-card img {
+    height: 120px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .articles-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
