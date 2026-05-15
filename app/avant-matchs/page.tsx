@@ -4,6 +4,7 @@ import CompositionWidget from '@/components/CompositionWidget'
 import HeadToHead from '@/components/HeadToHead'
 import Pronostics from '@/components/Pronostics'
 import MatchDayBanner from '@/components/MatchDayBanner'
+import Infirmerie from '@/components/Infirmerie'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -15,7 +16,6 @@ export default function AvantMatchsPage() {
   return (
     <main style={{minHeight:'100vh',background:'var(--barca-dark)'}}>
       <Header />
-
       <div style={{background:'linear-gradient(135deg,#0a0f1e,#0f0a1a)',borderBottom:'1px solid var(--barca-border)',padding:'48px 24px 40px'}}>
         <div style={{maxWidth:'1280px',margin:'0 auto'}}>
           <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'12px'}}>
@@ -27,11 +27,8 @@ export default function AvantMatchsPage() {
       </div>
 
       <div style={{maxWidth:'1280px',margin:'0 auto',padding:'40px 24px 80px'}}>
-
-        {/* Compte à rebours + TV */}
         <MatchDayBanner />
 
-        {/* Composition + Infos */}
         <div style={{display:'grid',gridTemplateColumns:'1fr 340px',gap:'32px',alignItems:'start',marginBottom:'40px'}}>
           <CompositionWidget matchTitle="FC Barcelone — Composition probable" />
           <div style={{background:'var(--barca-card)',border:'1px solid var(--barca-border)',borderRadius:'8px',overflow:'hidden'}}>
@@ -56,20 +53,22 @@ export default function AvantMatchsPage() {
           </div>
         </div>
 
-        {/* Head to Head */}
+        <div style={{marginBottom:'40px'}}>
+          <div style={{marginBottom:'20px'}}><h2 className="section-title">Infirmerie & Suspensions</h2></div>
+          <Infirmerie />
+        </div>
+
         <div style={{marginBottom:'40px'}}>
           <div style={{marginBottom:'20px'}}><h2 className="section-title">Face-à-Face</h2></div>
           <HeadToHead />
         </div>
 
-        {/* Pronostics */}
         <div>
           <div style={{marginBottom:'20px'}}><h2 className="section-title">Pronostics</h2></div>
           <div style={{maxWidth:'680px'}}>
             <Pronostics />
           </div>
         </div>
-
       </div>
       <Footer />
     </main>
