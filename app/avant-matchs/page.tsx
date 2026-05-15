@@ -1,5 +1,6 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import CompositionWidget from '@/components/CompositionWidget'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -7,16 +8,21 @@ export const metadata: Metadata = {
   description: 'Compositions probables, enjeux et analyses des prochains matchs du FC Barcelone.',
 }
 
-const avantMatchs = [
-  {id:1,img:'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80',home:'FC Barcelone',away:'PSG',comp:'UCL Finale',date:'31 mai 2026',titre:'Barça - PSG : le guide complet de la finale de Champions League',extrait:'Tout ce qu\'il faut savoir avant la finale historique de Munich.',slug:'barca-psg-finale'},
-  {id:2,img:'https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&q=80',home:'FC Barcelone',away:'Español',comp:'Liga J37',date:'11 mai 2026',titre:'Barça - Español : compositions probables et enjeux du derby',extrait:'Flick devrait faire tourner avant la finale européenne.',slug:'barca-espanyol'},
-  {id:3,img:'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&q=80',home:'FC Barcelone',away:'Valence',comp:'Liga J38',date:'25 mai 2026',titre:'Barça - Valence : le Barça veut finir en beauté',extrait:'Dernier match de Liga avant la grande finale.',slug:'barca-valence'},
-]
+const prochainMatch = {
+  home: 'FC Barcelone',
+  away: 'PSG',
+  comp: 'UCL Finale',
+  date: '31 mai 2026',
+  heure: '21h00',
+  lieu: 'Allianz Arena, Munich',
+}
 
 export default function AvantMatchsPage() {
   return (
     <main style={{minHeight:'100vh',background:'var(--barca-dark)'}}>
       <Header />
+
+      {/* Hero */}
       <div style={{background:'linear-gradient(135deg,#0a0f1e,#0f0a1a)',borderBottom:'1px solid var(--barca-border)',padding:'48px 24px 40px'}}>
         <div style={{maxWidth:'1280px',margin:'0 auto'}}>
           <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'12px'}}>
@@ -26,29 +32,89 @@ export default function AvantMatchsPage() {
           <p style={{fontSize:'15px',color:'var(--text-secondary)',marginLeft:'16px'}}>Compositions, enjeux et analyses des prochains matchs</p>
         </div>
       </div>
+
       <div style={{maxWidth:'1280px',margin:'0 auto',padding:'40px 24px 80px'}}>
-        <div style={{display:'flex',flexDirection:'column',gap:'24px'}}>
-          {avantMatchs.map(a=>(
-            <a key={a.id} href={`/articles/${a.slug}`} className="article-card" style={{display:'grid',gridTemplateColumns:'280px 1fr',textDecoration:'none',minHeight:'180px'}}>
-              <div style={{overflow:'hidden',borderRadius:'6px 0 0 6px'}}>
-                <img src={a.img} alt={a.titre} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
-              </div>
-              <div style={{padding:'24px 28px',display:'flex',flexDirection:'column',justifyContent:'center'}}>
-                <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'14px'}}>
-                  <span className="badge badge-blue">{a.comp}</span>
-                  <span style={{fontSize:'11px',color:'var(--text-muted)',fontFamily:'DM Mono,monospace'}}>{a.date}</span>
-                </div>
-                <div style={{display:'flex',alignItems:'center',gap:'16px',marginBottom:'14px'}}>
-                  <span style={{fontSize:'16px',fontWeight:700,color:'white'}}>{a.home}</span>
-                  <span style={{fontSize:'12px',background:'rgba(255,255,255,0.07)',color:'var(--text-muted)',padding:'4px 12px',borderRadius:'2px',fontFamily:'DM Mono,monospace'}}>VS</span>
-                  <span style={{fontSize:'16px',fontWeight:700,color:'var(--text-secondary)'}}>{a.away}</span>
-                </div>
-                <h2 style={{fontSize:'1.05rem',color:'white',lineHeight:1.4,fontFamily:'Playfair Display,serif',fontWeight:700,marginBottom:'8px'}}>{a.titre}</h2>
-                <p style={{fontSize:'13px',color:'var(--text-secondary)',lineHeight:1.6}}>{a.extrait}</p>
-              </div>
-            </a>
-          ))}
+
+        {/* Prochain match banner */}
+        <div style={{background:'linear-gradient(135deg,rgba(0,77,152,0.2),rgba(165,0,68,0.2))',border:'1px solid var(--barca-border)',borderRadius:'8px',padding:'24px 28px',marginBottom:'40px',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:'20px'}}>
+          <div>
+            <div style={{fontFamily:'DM Mono,monospace',fontSize:'10px',color:'var(--text-muted)',letterSpacing:'0.1em',marginBottom:'8px'}}>{prochainMatch.comp} · {prochainMatch.date}</div>
+            <div style={{display:'flex',alignItems:'center',gap:'20px'}}>
+              <span style={{fontFamily:'Playfair Display,serif',fontSize:'1.4rem',fontWeight:900,color:'white'}}>{prochainMatch.home}</span>
+              <span style={{fontFamily:'DM Mono,monospace',fontSize:'1rem',color:'var(--text-muted)',background:'rgba(255,255,255,0.07)',padding:'6px 16px',borderRadius:'4px'}}>VS</span>
+              <span style={{fontFamily:'Playfair Display,serif',fontSize:'1.4rem',fontWeight:900,color:'var(--text-secondary)'}}>{prochainMatch.away}</span>
+            </div>
+            <div style={{marginTop:'8px',fontSize:'13px',color:'var(--text-muted)'}}>
+              📍 {prochainMatch.lieu} · ⏰ {prochainMatch.heure}
+            </div>
+          </div>
+          <div style={{background:'var(--barca-red)',color:'white',padding:'10px 20px',borderRadius:'4px',fontFamily:'DM Mono,monospace',fontSize:'12px',fontWeight:600,letterSpacing:'0.08em'}}>
+            FINALE
+          </div>
         </div>
+
+        {/* Layout : composition + sidebar infos */}
+        <div style={{display:'grid',gridTemplateColumns:'1fr 340px',gap:'32px',alignItems:'start'}}>
+
+          {/* Widget composition */}
+          <CompositionWidget matchTitle="FC Barcelone — Composition probable" />
+
+          {/* Infos match */}
+          <div style={{display:'flex',flexDirection:'column',gap:'20px'}}>
+
+            {/* Infos clés */}
+            <div style={{background:'var(--barca-card)',border:'1px solid var(--barca-border)',borderRadius:'8px',overflow:'hidden'}}>
+              <div style={{background:'var(--barca-blue)',padding:'12px 16px'}}>
+                <span style={{fontFamily:'DM Mono,monospace',fontSize:'11px',fontWeight:600,color:'white',letterSpacing:'0.08em'}}>📋 INFOS MATCH</span>
+              </div>
+              <div style={{padding:'16px'}}>
+                {[
+                  {label:'Compétition',value:'UCL Finale'},
+                  {label:'Date',value:'31 mai 2026'},
+                  {label:'Heure',value:'21h00 CET'},
+                  {label:'Stade',value:'Allianz Arena'},
+                  {label:'Ville',value:'Munich, Allemagne'},
+                  {label:'Arbitre',value:'Szymon Marciniak'},
+                ].map(item=>(
+                  <div key={item.label} style={{display:'flex',justifyContent:'space-between',padding:'8px 0',borderBottom:'1px solid var(--barca-border)',fontSize:'13px'}}>
+                    <span style={{color:'var(--text-muted)',fontFamily:'DM Mono,monospace',fontSize:'11px'}}>{item.label}</span>
+                    <span style={{color:'white',fontWeight:500}}>{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Forme récente */}
+            <div style={{background:'var(--barca-card)',border:'1px solid var(--barca-border)',borderRadius:'8px',overflow:'hidden'}}>
+              <div style={{background:'var(--barca-red)',padding:'12px 16px'}}>
+                <span style={{fontFamily:'DM Mono,monospace',fontSize:'11px',fontWeight:600,color:'white',letterSpacing:'0.08em'}}>📈 FORME RÉCENTE</span>
+              </div>
+              <div style={{padding:'16px'}}>
+                {[
+                  {team:'Barça',results:['V','V','V','N','V']},
+                  {team:'PSG',results:['V','V','D','V','V']},
+                ].map(row=>(
+                  <div key={row.team} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'8px 0',borderBottom:'1px solid var(--barca-border)'}}>
+                    <span style={{fontSize:'13px',color:'white',fontWeight:600,width:'60px'}}>{row.team}</span>
+                    <div style={{display:'flex',gap:'4px'}}>
+                      {row.results.map((r,i)=>(
+                        <span key={i} style={{
+                          width:'24px',height:'24px',borderRadius:'4px',
+                          display:'flex',alignItems:'center',justifyContent:'center',
+                          fontSize:'11px',fontWeight:700,fontFamily:'DM Mono,monospace',
+                          background:r==='V'?'rgba(74,222,128,0.2)':r==='D'?'rgba(248,113,113,0.2)':'rgba(255,255,255,0.1)',
+                          color:r==='V'?'#4ade80':r==='D'?'#f87171':'rgba(255,255,255,0.5)',
+                        }}>{r}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
       <Footer />
     </main>
