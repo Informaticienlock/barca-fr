@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 
-const FORMATIONS: Record<string, number[][]> = {
+const FORMATIONS: Record<string, number[][][]> = {
   '4-3-3': [
     [[50, 88]],
     [[18,68],[36,72],[64,72],[82,68]],
