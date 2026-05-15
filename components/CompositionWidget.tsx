@@ -30,27 +30,27 @@ const FORMATIONS: Record<string, number[][][]> = {
 }
 
 const SQUAD = [
-  {id:1, num:1,  name:'Peña',      pos:'GK'},
-  {id:2, num:22, name:'Cancelo',   pos:'RB'},
-  {id:3, num:23, name:'Koundé',    pos:'CB'},
-  {id:4, num:4,  name:'Araújo',    pos:'CB'},
-  {id:5, num:3,  name:'Balde',     pos:'LB'},
-  {id:6, num:8,  name:'Pedri',     pos:'CM'},
-  {id:7, num:5,  name:'Casadó',    pos:'CM'},
-  {id:8, num:6,  name:'Gavi',      pos:'CM'},
-  {id:9, num:11, name:'Raphinha',  pos:'RW'},
+  {id:1, num:1,  name:'Peña',       pos:'GK'},
+  {id:2, num:22, name:'Cancelo',    pos:'RB'},
+  {id:3, num:23, name:'Koundé',     pos:'CB'},
+  {id:4, num:4,  name:'Araújo',     pos:'CB'},
+  {id:5, num:3,  name:'Balde',      pos:'LB'},
+  {id:6, num:8,  name:'Pedri',      pos:'CM'},
+  {id:7, num:5,  name:'Casadó',     pos:'CM'},
+  {id:8, num:6,  name:'Gavi',       pos:'CM'},
+  {id:9, num:11, name:'Raphinha',   pos:'RW'},
   {id:10,num:9,  name:'Lewandowski',pos:'ST'},
-  {id:11,num:19, name:'Yamal',     pos:'LW'},
+  {id:11,num:19, name:'Yamal',      pos:'LW'},
 ]
 
 const BENCH = [
-  {id:12,num:13,name:'Ter Stegen',pos:'GK'},
-  {id:13,num:2, name:'Bellerín',  pos:'RB'},
+  {id:12,num:13,name:'Ter Stegen', pos:'GK'},
+  {id:13,num:2, name:'Bellerín',   pos:'RB'},
   {id:14,num:15,name:'Christensen',pos:'CB'},
-  {id:15,num:16,name:'Fermín',    pos:'CM'},
-  {id:16,num:21,name:'de Jong',   pos:'CM'},
-  {id:17,num:17,name:'Dani Olmo', pos:'AM'},
-  {id:18,num:7, name:'Ferran',    pos:'LW'},
+  {id:15,num:16,name:'Fermín',     pos:'CM'},
+  {id:16,num:21,name:'de Jong',    pos:'CM'},
+  {id:17,num:17,name:'Dani Olmo',  pos:'AM'},
+  {id:18,num:7, name:'Ferran',     pos:'LW'},
 ]
 
 type Player = typeof SQUAD[0]
@@ -59,23 +59,22 @@ export default function CompositionWidget({ matchTitle = 'FC Barcelone' }: { mat
   const [formation, setFormation] = useState('4-3-3')
   const [lineup, setLineup] = useState<Player[]>(SQUAD)
   const [editMode, setEditMode] = useState(false)
-  const [dragging, setDragging] = useState<number | null>(null)
-  const [hovering, setHovering] = useState<number | null>(null)
-  const [votes, setVotes] = useState<Record<number,number>>({})
-  const [voted, setVoted] = useState(false)
+  const [selected, setSelected] = useState<number | null>(null)
 
   const positions = FORMATIONS[formation].flat()
 
-  const handleSwap = (idxA: number, idxB: number) => {
-    const next = [...lineup]
-    ;[next[idxA], next[idxB]] = [next[idxB], next[idxA]]
-    setLineup(next)
-  }
-
-  const handleVote = (idx: number) => {
-    if (voted) return
-    setVotes(v => ({...v, [idx]: (v[idx]||0)+1}))
-    setVoted(true)
+  const handleClick = (idx: number) => {
+    if (!editMode) return
+    if (selected === null) {
+      setSelected(idx)
+    } else if (selected === idx) {
+      setSelected(null)
+    } else {
+      const next = [...lineup]
+      ;[next[selected], next[idx]] = [next[idx], next[selected]]
+      setLineup(next)
+      setSelected(null)
+    }
   }
 
   return (
@@ -88,17 +87,18 @@ export default function CompositionWidget({ matchTitle = 'FC Barcelone' }: { mat
           <div style={{fontFamily:'Playfair Display,serif',fontSize:'1.1rem',fontWeight:700,color:'white'}}>{matchTitle}</div>
         </div>
         <div style={{display:'flex',gap:'8px',alignItems:'center',flexWrap:'wrap'}}>
-          {/* Sélecteur formation */}
           <select
             value={formation}
             onChange={e=>setFormation(e.target.value)}
             style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.2)',color:'white',padding:'6px 10px',borderRadius:'4px',fontSize:'13px',fontFamily:'DM Mono,monospace',cursor:'pointer'}}
           >
-            {Object.keys(FORMATIONS).map(f=><option key={f} value={f} style={{background:'#0a0f1e'}}>{f}</option>)}
+            {Object.keys(FORMATIONS).map(f=>(
+              <option key={f} value={f} style={{background:'#0a0f1e'}}>{f}</option>
+            ))}
           </select>
           <button
-            onClick={()=>setEditMode(!editMode)}
-            style={{background:editMode?'var(--barca-red)':'rgba(255,255,255,0.15)',border:'none',color:'white',padding:'6px 14px',borderRadius:'4px',fontSize:'12px',fontWeight:600,cursor:'pointer',fontFamily:'DM Mono,monospace',letterSpacing:'0.05em',transition:'background 0.2s'}}
+            onClick={()=>{setEditMode(!editMode);setSelected(null)}}
+            style={{background:editMode?'var(--barca-red)':'rgba(255,255,255,0.15)',border:'none',color:'white',padding:'6px 14px',borderRadius:'4px',fontSize:'12px',fontWeight:600,cursor:'pointer',fontFamily:'DM Mono,monospace',letterSpacing:'0.05em'}}
           >
             {editMode ? '✓ TERMINER' : '✏️ MODIFIER'}
           </button>
@@ -107,15 +107,15 @@ export default function CompositionWidget({ matchTitle = 'FC Barcelone' }: { mat
 
       {editMode && (
         <div style={{background:'rgba(0,77,152,0.15)',padding:'10px 20px',borderBottom:'1px solid var(--barca-border)',fontSize:'12px',color:'rgba(255,255,255,0.6)',fontFamily:'DM Mono,monospace'}}>
-          🔄 Glisse-dépose les joueurs pour changer leur position · Vote pour ta compo idéale
+          {selected !== null
+            ? `✓ ${lineup[selected].name} sélectionné — clique sur un autre joueur pour échanger`
+            : '👆 Clique sur un joueur pour le sélectionner, puis sur un autre pour échanger'}
         </div>
       )}
 
-      {/* Terrain */}
+      {/* Terrain SVG */}
       <div style={{padding:'16px',background:'#0a0f1e'}}>
         <svg viewBox="0 0 100 100" style={{width:'100%',maxWidth:'480px',display:'block',margin:'0 auto'}} xmlns="http://www.w3.org/2000/svg">
-
-          {/* Fond terrain */}
           <defs>
             <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#1a4a2e"/>
@@ -124,88 +124,53 @@ export default function CompositionWidget({ matchTitle = 'FC Barcelone' }: { mat
             </linearGradient>
           </defs>
           <rect width="100" height="100" fill="url(#grass)" rx="2"/>
-
-          {/* Lignes terrain */}
           <rect x="5" y="4" width="90" height="92" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.5"/>
           <line x1="5" y1="50" x2="95" y2="50" stroke="rgba(255,255,255,0.2)" strokeWidth="0.4"/>
           <circle cx="50" cy="50" r="10" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="0.4"/>
           <circle cx="50" cy="50" r="0.8" fill="rgba(255,255,255,0.4)"/>
-
-          {/* Surface réparation haute */}
           <rect x="27" y="4" width="46" height="16" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="0.4"/>
           <rect x="38" y="4" width="24" height="7" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.3"/>
-
-          {/* Surface réparation basse */}
           <rect x="27" y="80" width="46" height="16" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="0.4"/>
           <rect x="38" y="89" width="24" height="7" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.3"/>
-
-          {/* Points de penalty */}
           <circle cx="50" cy="15" r="0.6" fill="rgba(255,255,255,0.3)"/>
           <circle cx="50" cy="85" r="0.6" fill="rgba(255,255,255,0.3)"/>
+          <text x="50" y="9.5" textAnchor="middle" fontSize="2" fill="rgba(255,255,255,0.2)" fontFamily="DM Mono,monospace" letterSpacing="0.15em">ATTAQUE</text>
+          <text x="50" y="97.5" textAnchor="middle" fontSize="2" fill="rgba(255,255,255,0.2)" fontFamily="DM Mono,monospace" letterSpacing="0.15em">DÉFENSE</text>
 
-          {/* Joueurs */}
           {lineup.slice(0, positions.length).map((player, idx) => {
             const [px, py] = positions[idx]
-            const isDragging = dragging === idx
-            const isHovering = hovering === idx && editMode && dragging !== null && dragging !== idx
+            const isSelected = selected === idx
+            const isSwapTarget = selected !== null && selected !== idx && editMode
 
             return (
               <g
                 key={player.id}
-                style={{cursor: editMode ? 'grab' : 'default'}}
-                draggable={editMode as any}
-                onDragStart={()=>setDragging(idx)}
-                onDragEnd={()=>{setDragging(null);setHovering(null)}}
-                onDragOver={e=>{e.preventDefault();setHovering(idx)}}
-                onDrop={()=>{if(dragging!==null&&dragging!==idx){handleSwap(dragging,idx);setDragging(null);setHovering(null)}}}
+                onClick={() => handleClick(idx)}
+                style={{cursor: editMode ? 'pointer' : 'default'}}
               >
-                {/* Ombre */}
                 <ellipse cx={px} cy={py+4.5} rx="3.5" ry="1" fill="rgba(0,0,0,0.3)"/>
-
-                {/* Cercle joueur */}
                 <circle
-                  cx={px} cy={py}
-                  r={isDragging?4.2:isHovering?4:3.8}
-                  fill={isDragging?'var(--barca-gold)':isHovering?'rgba(0,77,152,0.9)':'var(--barca-blue)'}
-                  stroke={isHovering?'white':'rgba(255,255,255,0.6)'}
-                  strokeWidth="0.5"
-                  style={{transition:'all 0.15s'}}
+                  cx={px} cy={py} r={isSelected ? 4.5 : 3.8}
+                  fill={isSelected ? 'var(--barca-gold)' : isSwapTarget ? 'rgba(0,77,152,0.7)' : 'var(--barca-blue)'}
+                  stroke={isSelected ? '#fff' : isSwapTarget ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.6)'}
+                  strokeWidth={isSelected ? '0.8' : '0.5'}
                 />
-
-                {/* Numéro */}
+                {isSelected && (
+                  <circle cx={px} cy={py} r="5.5" fill="none" stroke="var(--barca-gold)" strokeWidth="0.5" strokeDasharray="1.5 1"/>
+                )}
                 <text x={px} y={py+0.8} textAnchor="middle" fontSize="2.8" fill="white" fontWeight="700" fontFamily="DM Mono,monospace">
                   {player.num}
                 </text>
-
-                {/* Nom */}
                 <text x={px} y={py+7.5} textAnchor="middle" fontSize="2.2" fill="rgba(255,255,255,0.9)" fontFamily="DM Sans,sans-serif" fontWeight="600">
                   {player.name.split(' ').pop()}
                 </text>
-
-                {/* Vote */}
-                {editMode && !voted && (
-                  <g onClick={()=>handleVote(idx)} style={{cursor:'pointer'}}>
-                    <rect x={px-5} y={py+9} width="10" height="4" rx="1" fill="rgba(237,187,0,0.2)" stroke="var(--barca-gold)" strokeWidth="0.3"/>
-                    <text x={px} y={py+11.8} textAnchor="middle" fontSize="2" fill="var(--barca-gold)" fontFamily="DM Mono,monospace">VOTER</text>
-                  </g>
-                )}
-                {votes[idx] && (
-                  <g>
-                    <rect x={px-4} y={py+9} width="8" height="4" rx="1" fill="rgba(237,187,0,0.3)"/>
-                    <text x={px} y={py+11.8} textAnchor="middle" fontSize="2" fill="var(--barca-gold)" fontFamily="DM Mono,monospace">+{votes[idx]}</text>
-                  </g>
-                )}
               </g>
             )
           })}
-
-          {/* Label attaque/défense */}
-          <text x="50" y="9.5" textAnchor="middle" fontSize="2" fill="rgba(255,255,255,0.2)" fontFamily="DM Mono,monospace" letterSpacing="0.15em">ATTAQUE</text>
-          <text x="50" y="97.5" textAnchor="middle" fontSize="2" fill="rgba(255,255,255,0.2)" fontFamily="DM Mono,monospace" letterSpacing="0.15em">DÉFENSE</text>
         </svg>
       </div>
 
-      {/* Banc de touche */}
+      {/* Banc */}
       <div style={{padding:'16px 20px',borderTop:'1px solid var(--barca-border)'}}>
         <div style={{fontFamily:'DM Mono,monospace',fontSize:'10px',color:'var(--text-muted)',letterSpacing:'0.1em',marginBottom:'12px'}}>REMPLAÇANTS</div>
         <div style={{display:'flex',flexWrap:'wrap',gap:'8px'}}>
@@ -222,7 +187,6 @@ export default function CompositionWidget({ matchTitle = 'FC Barcelone' }: { mat
           ))}
         </div>
       </div>
-
     </div>
   )
 }
