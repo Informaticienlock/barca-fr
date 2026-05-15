@@ -2,6 +2,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CompositionWidget from '@/components/CompositionWidget'
 import HeadToHead from '@/components/HeadToHead'
+import Pronostics from '@/components/Pronostics'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -10,12 +11,9 @@ export const metadata: Metadata = {
 }
 
 const prochainMatch = {
-  home: 'FC Barcelone',
-  away: 'PSG',
-  comp: 'UCL Finale',
-  date: '31 mai 2026',
-  heure: '21h00',
-  lieu: 'Allianz Arena, Munich',
+  home: 'FC Barcelone', away: 'PSG',
+  comp: 'UCL Finale', date: '31 mai 2026',
+  heure: '21h00', lieu: 'Allianz Arena, Munich',
 }
 
 export default function AvantMatchsPage() {
@@ -35,13 +33,13 @@ export default function AvantMatchsPage() {
 
       <div style={{maxWidth:'1280px',margin:'0 auto',padding:'40px 24px 80px'}}>
 
-        {/* Banner prochain match */}
+        {/* Banner */}
         <div style={{background:'linear-gradient(135deg,rgba(0,77,152,0.2),rgba(165,0,68,0.2))',border:'1px solid var(--barca-border)',borderRadius:'8px',padding:'24px 28px',marginBottom:'40px',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:'20px'}}>
           <div>
             <div style={{fontFamily:'DM Mono,monospace',fontSize:'10px',color:'var(--text-muted)',letterSpacing:'0.1em',marginBottom:'8px'}}>{prochainMatch.comp} · {prochainMatch.date}</div>
             <div style={{display:'flex',alignItems:'center',gap:'20px'}}>
               <span style={{fontFamily:'Playfair Display,serif',fontSize:'1.4rem',fontWeight:900,color:'white'}}>{prochainMatch.home}</span>
-              <span style={{fontFamily:'DM Mono,monospace',fontSize:'1rem',color:'var(--text-muted)',background:'rgba(255,255,255,0.07)',padding:'6px 16px',borderRadius:'4px'}}>VS</span>
+              <span style={{fontFamily:'DM Mono,monospace',color:'var(--text-muted)',background:'rgba(255,255,255,0.07)',padding:'6px 16px',borderRadius:'4px'}}>VS</span>
               <span style={{fontFamily:'Playfair Display,serif',fontSize:'1.4rem',fontWeight:900,color:'var(--text-secondary)'}}>{prochainMatch.away}</span>
             </div>
             <div style={{marginTop:'8px',fontSize:'13px',color:'var(--text-muted)'}}>📍 {prochainMatch.lieu} · ⏰ {prochainMatch.heure}</div>
@@ -49,7 +47,7 @@ export default function AvantMatchsPage() {
           <div style={{background:'var(--barca-red)',color:'white',padding:'10px 20px',borderRadius:'4px',fontFamily:'DM Mono,monospace',fontSize:'12px',fontWeight:600,letterSpacing:'0.08em'}}>FINALE</div>
         </div>
 
-        {/* Layout 2 colonnes */}
+        {/* Composition + Infos */}
         <div style={{display:'grid',gridTemplateColumns:'1fr 340px',gap:'32px',alignItems:'start',marginBottom:'40px'}}>
           <CompositionWidget matchTitle="FC Barcelone — Composition probable" />
           <div style={{display:'flex',flexDirection:'column',gap:'20px'}}>
@@ -76,12 +74,18 @@ export default function AvantMatchsPage() {
           </div>
         </div>
 
-        {/* Head to Head — pleine largeur */}
+        {/* Head to Head */}
         <div style={{marginBottom:'40px'}}>
-          <div style={{marginBottom:'20px'}}>
-            <h2 className="section-title">Face-à-Face</h2>
-          </div>
+          <div style={{marginBottom:'20px'}}><h2 className="section-title">Face-à-Face</h2></div>
           <HeadToHead />
+        </div>
+
+        {/* Pronostics */}
+        <div>
+          <div style={{marginBottom:'20px'}}><h2 className="section-title">Pronostics</h2></div>
+          <div style={{maxWidth:'680px'}}>
+            <Pronostics />
+          </div>
         </div>
 
       </div>
