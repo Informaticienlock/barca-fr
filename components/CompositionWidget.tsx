@@ -153,7 +153,7 @@ export default function CompositionWidget({ matchTitle = 'FC Barcelone' }: { mat
               <g
                 key={player.id}
                 style={{cursor: editMode ? 'grab' : 'default'}}
-                draggable={editMode}
+                draggable={editMode as any}
                 onDragStart={()=>setDragging(idx)}
                 onDragEnd={()=>{setDragging(null);setHovering(null)}}
                 onDragOver={e=>{e.preventDefault();setHovering(idx)}}
