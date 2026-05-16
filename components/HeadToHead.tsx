@@ -71,7 +71,7 @@ function StatBar({label,valA,valB,unit='',higherIsBetter=true}:{label:string,val
   )
 }
 
-function MatchRow({m,isBarca}:{m:typeof H2H[0],isBarca:boolean}) {
+function MatchRow({m,isBarca}:{m:{date:string,domicile:string,exterieur:string,score:string,comp:string,winner?:string},isBarca:boolean}) {
   const myTeam = isBarca ? 'Barça' : 'PSG'
   return (
     <div style={{display:'flex',alignItems:'center',padding:'8px 12px',background:'rgba(255,255,255,0.02)',borderRadius:'4px',border:'1px solid var(--barca-border)',gap:'8px'}}>
