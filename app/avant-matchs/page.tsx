@@ -29,7 +29,23 @@ export default function AvantMatchsPage() {
       <div style={{maxWidth:'1280px',margin:'0 auto',padding:'40px 24px 80px'}}>
         <MatchDayBanner />
 
-        <div style={{display:'grid',gridTemplateColumns:'1fr 340px',gap:'32px',alignItems:'start',marginBottom:'40px'}}>
+        {/* Composition + Infos — responsive */}
+        <style>{`
+          .avant-match-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            align-items: start;
+            margin-bottom: 40px;
+          }
+          @media (max-width: 900px) {
+            .avant-match-grid {
+              grid-template-columns: 1fr;
+            }
+          }
+        `}</style>
+
+        <div className="avant-match-grid">
           <CompositionWidget matchTitle="FC Barcelone — Composition probable" />
           <div style={{background:'var(--barca-card)',border:'1px solid var(--barca-border)',borderRadius:'8px',overflow:'hidden'}}>
             <div style={{background:'var(--barca-blue)',padding:'12px 16px'}}>
