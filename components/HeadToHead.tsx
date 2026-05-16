@@ -9,7 +9,7 @@ type TeamData = {
   league: string
   form: ('V'|'N'|'D')[]
   stats: {possession:number, butsMarques:number, butsEncaisses:number, tirsParMatch:number, passesReussies:number}
-  historique: {date:string, domicile:string, exterieur:string, score:string, comp:string}[]
+  historique: {date:string, domicile:string, exterieur:string, score:string, comp:string, winner?:string}[]
 }
 
 const BARCA: TeamData = {
