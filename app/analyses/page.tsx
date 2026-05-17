@@ -3,6 +3,7 @@ import Footer from '@/components/Footer'
 import PlayerRating from '@/components/PlayerRating'
 import StatsAvancees from '@/components/StatsAvancees'
 import FocusJoueur from '@/components/FocusJoueur'
+import EvolutionTactique from '@/components/EvolutionTactique'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -26,7 +27,6 @@ export default function AnalysesPage() {
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 24px 80px' }}>
 
-        {/* Player Ratings */}
         <div style={{ marginBottom: '56px' }}>
           <div style={{ marginBottom: '20px' }}>
             <h2 className="section-title">Notes des joueurs</h2>
@@ -37,7 +37,6 @@ export default function AnalysesPage() {
           <PlayerRating />
         </div>
 
-        {/* Stats Avancées */}
         <div style={{ marginBottom: '56px' }}>
           <div style={{ marginBottom: '20px' }}>
             <h2 className="section-title">Statistiques Avancées</h2>
@@ -48,8 +47,7 @@ export default function AnalysesPage() {
           <StatsAvancees />
         </div>
 
-        {/* Focus Joueur */}
-        <div>
+        <div style={{ marginBottom: '56px' }}>
           <div style={{ marginBottom: '20px' }}>
             <h2 className="section-title">Focus Joueur</h2>
             <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '6px', marginLeft: '16px', fontFamily: 'DM Mono,monospace' }}>
@@ -57,6 +55,16 @@ export default function AnalysesPage() {
             </p>
           </div>
           <FocusJoueur />
+        </div>
+
+        <div>
+          <div style={{ marginBottom: '20px' }}>
+            <h2 className="section-title">Évolution Tactique</h2>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '6px', marginLeft: '16px', fontFamily: 'DM Mono,monospace' }}>
+              Tendances sur les 10 derniers matchs · Liga & Champions League
+            </p>
+          </div>
+          <EvolutionTactique />
         </div>
 
       </div>
