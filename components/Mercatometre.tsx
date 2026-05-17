@@ -144,7 +144,7 @@ const STATUT_CONFIG = {
 }
 
 /* ── Jauge Mercatomètre ── */
-function Mercatometre({ probabilite, fiabilite }: { probabilite: number; fiabilite: Fiabilite }) {
+function JaugeMercatometre({ probabilite, fiabilite }: { probabilite: number; fiabilite: Fiabilite }) {
   const config = FIABILITE_CONFIG[fiabilite]
   const color = probabilite >= 75 ? '#4ade80' : probabilite >= 45 ? '#EDBB00' : '#f87171'
 
@@ -258,7 +258,7 @@ function RumeurCard({ rumeur }: { rumeur: Rumeur }) {
         </div>
 
         {/* Mercatomètre */}
-        <Mercatometre probabilite={rumeur.probabilite} fiabilite={rumeur.fiabilite} />
+        <JaugeMercatometre probabilite={rumeur.probabilite} fiabilite={rumeur.fiabilite} />
 
         {/* Source + date */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
