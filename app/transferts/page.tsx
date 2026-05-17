@@ -3,6 +3,7 @@ import Footer from '@/components/Footer'
 import Mercatometre from '@/components/Mercatometre'
 import TableauTransferts from '@/components/TableauTransferts'
 import PlafondSalarial from '@/components/PlafondSalarial'
+import SuiviPrets from '@/components/SuiviPrets'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -29,9 +30,7 @@ export default function TransfertsPage() {
         <div style={{ marginBottom:'56px' }}>
           <div style={{ marginBottom:'20px' }}>
             <h2 className="section-title">Mercatomètre</h2>
-            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>
-              Indice de crédibilité des rumeurs · Mercato été 2026
-            </p>
+            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>Indice de crédibilité des rumeurs · Mercato été 2026</p>
           </div>
           <Mercatometre />
         </div>
@@ -39,21 +38,25 @@ export default function TransfertsPage() {
         <div style={{ marginBottom:'56px' }}>
           <div style={{ marginBottom:'20px' }}>
             <h2 className="section-title">Tableau Officiel</h2>
-            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>
-              Arrivées & Départs confirmés · FC Barcelone · Été 2026
-            </p>
+            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>Arrivées & Départs confirmés · FC Barcelone · Été 2026</p>
           </div>
           <TableauTransferts />
         </div>
 
-        <div>
+        <div style={{ marginBottom:'56px' }}>
           <div style={{ marginBottom:'20px' }}>
             <h2 className="section-title">Plafond Salarial</h2>
-            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>
-              Masse salariale & simulateur d'enregistrement Liga
-            </p>
+            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>Masse salariale & simulateur d'enregistrement Liga</p>
           </div>
           <PlafondSalarial />
+        </div>
+
+        <div>
+          <div style={{ marginBottom:'20px' }}>
+            <h2 className="section-title">Suivi des Prêts</h2>
+            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>Joueurs prêtés · Stats saison · Clauses & options d'achat</p>
+          </div>
+          <SuiviPrets />
         </div>
 
       </div>
