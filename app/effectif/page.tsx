@@ -1,6 +1,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import GrilleEffectif from '@/components/GrilleEffectif'
+import RadarJoueur from '@/components/RadarJoueur'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -21,8 +22,29 @@ export default function EffectifPage() {
           <p style={{ fontSize:'15px', color:'var(--text-secondary)', marginLeft:'16px' }}>Effectif complet · FC Barcelone · Saison 2025-26</p>
         </div>
       </div>
+
       <div style={{ maxWidth:'1280px', margin:'0 auto', padding:'40px 24px 80px' }}>
-        <GrilleEffectif />
+
+        <div style={{ marginBottom:'56px' }}>
+          <div style={{ marginBottom:'20px' }}>
+            <h2 className="section-title">Grille de l'Effectif</h2>
+            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>
+              Effectif complet · Filtres par secteur & catégorie
+            </p>
+          </div>
+          <GrilleEffectif />
+        </div>
+
+        <div>
+          <div style={{ marginBottom:'20px' }}>
+            <h2 className="section-title">Radar de Profil</h2>
+            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>
+              Fiche joueur · Profil de jeu adapté au poste · Stats avancées
+            </p>
+          </div>
+          <RadarJoueur />
+        </div>
+
       </div>
       <Footer />
     </main>
