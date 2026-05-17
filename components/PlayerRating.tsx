@@ -25,11 +25,8 @@ const MATCH_PLAYERS: Player[] = [
 ]
 
 const MATCH_INFO = {
-  home: 'FC Barcelone',
-  away: 'Real Madrid',
-  score: '3-1',
-  date: '20 avril 2026',
-  comp: 'Liga J32',
+  home: 'FC Barcelone', away: 'Real Madrid',
+  score: '3-1', date: '20 avril 2026', comp: 'Liga J32',
 }
 
 function getRatingColor(rating: number): string {
@@ -41,11 +38,11 @@ function getRatingColor(rating: number): string {
 }
 
 function getRatingLabel(rating: number): string {
-  if (rating >= 9) return 'Légendaire'
-  if (rating >= 8) return 'Excellent'
-  if (rating >= 7) return 'Bon'
-  if (rating >= 6) return 'Correct'
-  if (rating >= 5) return 'Moyen'
+  if (rating >= 9)  return 'Légendaire'
+  if (rating >= 8)  return 'Excellent'
+  if (rating >= 7)  return 'Bon'
+  if (rating >= 6)  return 'Correct'
+  if (rating >= 5)  return 'Moyen'
   return 'Mauvais'
 }
 
@@ -57,7 +54,6 @@ function RatingGauge({userRating, communityAvg, communityVotes}: {userRating:num
         <span style={{color:'var(--text-muted)'}}>Ta note</span>
         <span style={{color:'var(--text-muted)'}}>Communauté ({(communityVotes+1).toLocaleString()} votes)</span>
       </div>
-      {/* Ta note */}
       <div style={{marginBottom:'6px'}}>
         <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
           <span style={{fontSize:'13px',fontWeight:700,fontFamily:'DM Mono,monospace',color:getRatingColor(userRating),width:'28px'}}>{userRating.toFixed(1)}</span>
@@ -66,7 +62,6 @@ function RatingGauge({userRating, communityAvg, communityVotes}: {userRating:num
           </div>
         </div>
       </div>
-      {/* Communauté */}
       <div>
         <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
           <span style={{fontSize:'13px',fontWeight:700,fontFamily:'DM Mono,monospace',color:getRatingColor(newAvg),width:'28px'}}>{newAvg.toFixed(1)}</span>
@@ -89,8 +84,6 @@ export default function PlayerRating() {
   const handleRate = (playerId: number, value: number) => {
     setRatings(r => ({...r, [playerId]: value}))
   }
-
-  const handleSubmit = () => setSubmitted(true)
 
   const topPlayer  = submitted ? MATCH_PLAYERS.reduce((a,b) => ratings[a.id]>ratings[b.id]?a:b) : null
   const flopPlayer = submitted ? MATCH_PLAYERS.reduce((a,b) => ratings[a.id]<ratings[b.id]?a:b) : null
@@ -119,26 +112,20 @@ export default function PlayerRating() {
         </div>
       </div>
 
-      {/* Top/Flop après vote */}
+      {/* Top/Flop */}
       {submitted && topPlayer && flopPlayer && (
         <div style={{padding:'16px 20px',borderBottom:'1px solid var(--barca-border)',display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'12px'}}>
-
-          {/* TOP */}
           <div style={{background:'rgba(74,222,128,0.1)',border:'1px solid rgba(74,222,128,0.2)',borderRadius:'6px',padding:'12px',textAlign:'center'}}>
             <div style={{fontSize:'10px',fontFamily:'DM Mono,monospace',color:'#4ade80',letterSpacing:'0.1em',marginBottom:'6px'}}>⭐ MVP</div>
             <div style={{fontSize:'14px',fontWeight:700,color:'white',marginBottom:'2px'}}>{topPlayer.name}</div>
             <div style={{fontSize:'11px',color:'var(--text-muted)',fontFamily:'DM Mono,monospace',marginBottom:'6px'}}>{topPlayer.pos}</div>
             <div style={{fontSize:'1.8rem',fontWeight:900,fontFamily:'DM Mono,monospace',color:'#4ade80',lineHeight:1}}>{ratings[topPlayer.id].toFixed(1)}</div>
           </div>
-
-          {/* Moyenne perso */}
           <div style={{background:'rgba(0,77,152,0.1)',border:'1px solid rgba(0,77,152,0.2)',borderRadius:'6px',padding:'12px',textAlign:'center'}}>
             <div style={{fontSize:'10px',fontFamily:'DM Mono,monospace',color:'var(--barca-blue)',letterSpacing:'0.1em',marginBottom:'6px'}}>TA MOYENNE</div>
             <div style={{fontSize:'1.8rem',fontWeight:900,fontFamily:'DM Mono,monospace',color:'white',lineHeight:1,marginBottom:'4px'}}>{userAvg.toFixed(1)}</div>
             <div style={{fontSize:'11px',color:getRatingColor(userAvg),fontFamily:'DM Mono,monospace'}}>{getRatingLabel(userAvg)}</div>
           </div>
-
-          {/* FLOP */}
           <div style={{background:'rgba(248,113,113,0.1)',border:'1px solid rgba(248,113,113,0.2)',borderRadius:'6px',padding:'12px',textAlign:'center'}}>
             <div style={{fontSize:'10px',fontFamily:'DM Mono,monospace',color:'#f87171',letterSpacing:'0.1em',marginBottom:'6px'}}>👎 FLOP</div>
             <div style={{fontSize:'14px',fontWeight:700,color:'white',marginBottom:'2px'}}>{flopPlayer.name}</div>
@@ -151,70 +138,78 @@ export default function PlayerRating() {
       {/* Liste joueurs */}
       <div style={{padding:'8px 0'}}>
         {MATCH_PLAYERS.map((player, i) => {
-          const rating = ratings[player.id]
-          const color  = getRatingColor(rating)
+          const rating   = ratings[player.id]
+          const color    = getRatingColor(rating)
           const isActive = activeSlider === player.id
 
           return (
             <div key={player.id} style={{
-              padding:'12px 20px',
+              padding:'12px 16px',
               borderBottom: i < MATCH_PLAYERS.length-1 ? '1px solid var(--barca-border)' : 'none',
               background: isActive ? 'rgba(0,77,152,0.05)' : 'transparent',
               transition:'background 0.15s',
             }}>
-              <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
+              {/* Ligne principale : numéro + nom/poste + note */}
+              <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom: submitted ? '0' : '10px'}}>
 
                 {/* Numéro */}
-                <div style={{width:'32px',height:'32px',borderRadius:'50%',background:'rgba(0,77,152,0.25)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'12px',fontFamily:'DM Mono,monospace',fontWeight:700,color:'rgba(255,255,255,0.7)',flexShrink:0}}>{player.num}</div>
+                <div style={{
+                  width:'32px',height:'32px',borderRadius:'50%',flexShrink:0,
+                  background:'rgba(0,77,152,0.25)',display:'flex',alignItems:'center',
+                  justifyContent:'center',fontSize:'12px',fontFamily:'DM Mono,monospace',
+                  fontWeight:700,color:'rgba(255,255,255,0.7)',
+                }}>{player.num}</div>
 
                 {/* Nom + poste */}
-                <div style={{minWidth:'130px',flexShrink:0}}>
-                  <div style={{fontSize:'13px',fontWeight:600,color:'white'}}>{player.name}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:'13px',fontWeight:600,color:'white',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>
+                    {player.name}
+                  </div>
                   <div style={{fontSize:'10px',fontFamily:'DM Mono,monospace',color:'var(--text-muted)'}}>{player.pos}</div>
                 </div>
 
-                {/* Slider + note */}
-                <div style={{flex:1}}>
-                  {!submitted ? (
-                    <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
-                      <input
-                        type="range"
-                        min="1" max="10" step="0.5"
-                        value={rating}
-                        onChange={e=>handleRate(player.id, parseFloat(e.target.value))}
-                        onFocus={()=>setActiveSlider(player.id)}
-                        onBlur={()=>setActiveSlider(null)}
-                        style={{
-                          flex:1,
-                          height:'4px',
-                          appearance:'none',
-                          WebkitAppearance:'none',
-                          background:`linear-gradient(to right, ${color} ${((rating-1)/9)*100}%, rgba(255,255,255,0.1) ${((rating-1)/9)*100}%)`,
-                          borderRadius:'4px',
-                          outline:'none',
-                          cursor:'pointer',
-                        }}
-                      />
-                      <div style={{
-                        width:'44px',height:'36px',borderRadius:'6px',
-                        background:`rgba(${rating>=7?'74,222,128':rating>=5?'251,191,36':'248,113,113'},0.15)`,
-                        border:`1px solid ${color}44`,
-                        display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',
-                        flexShrink:0,
-                      }}>
-                        <div style={{fontSize:'14px',fontWeight:900,fontFamily:'DM Mono,monospace',color,lineHeight:1}}>{rating.toFixed(1)}</div>
-                        <div style={{fontSize:'8px',color:'var(--text-muted)',marginTop:'1px'}}>{getRatingLabel(rating).slice(0,4)}</div>
-                      </div>
-                    </div>
-                  ) : (
-                    <RatingGauge
-                      userRating={rating}
-                      communityAvg={player.communityAvg}
-                      communityVotes={player.communityVotes}
-                    />
-                  )}
+                {/* Badge note — toujours visible à droite */}
+                <div style={{
+                  width:'48px',height:'40px',borderRadius:'6px',flexShrink:0,
+                  background:`rgba(${rating>=7?'74,222,128':rating>=5?'251,191,36':'248,113,113'},0.15)`,
+                  border:`1px solid ${color}44`,
+                  display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',
+                }}>
+                  <div style={{fontSize:'15px',fontWeight:900,fontFamily:'DM Mono,monospace',color,lineHeight:1}}>{rating.toFixed(1)}</div>
+                  <div style={{fontSize:'8px',color:'var(--text-muted)',marginTop:'2px',fontFamily:'DM Mono,monospace'}}>{getRatingLabel(rating).slice(0,4)}</div>
                 </div>
               </div>
+
+              {/* Slider — sur sa propre ligne en dessous */}
+              {!submitted && (
+                <div style={{paddingLeft:'42px',paddingRight:'58px'}}>
+                  <input
+                    type="range"
+                    min="1" max="10" step="0.5"
+                    value={rating}
+                    onChange={e => handleRate(player.id, parseFloat(e.target.value))}
+                    onFocus={() => setActiveSlider(player.id)}
+                    onBlur={() => setActiveSlider(null)}
+                    style={{
+                      width:'100%',height:'4px',
+                      appearance:'none',WebkitAppearance:'none',
+                      background:`linear-gradient(to right, ${color} ${((rating-1)/9)*100}%, rgba(255,255,255,0.1) ${((rating-1)/9)*100}%)`,
+                      borderRadius:'4px',outline:'none',cursor:'pointer',display:'block',
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* Gauge communauté après vote */}
+              {submitted && (
+                <div style={{paddingLeft:'42px'}}>
+                  <RatingGauge
+                    userRating={rating}
+                    communityAvg={player.communityAvg}
+                    communityVotes={player.communityVotes}
+                  />
+                </div>
+              )}
             </div>
           )
         })}
@@ -225,29 +220,27 @@ export default function PlayerRating() {
         {!submitted ? (
           <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'12px',flexWrap:'wrap'}}>
             <div style={{fontSize:'12px',color:'var(--text-muted)',fontFamily:'DM Mono,monospace'}}>
-              {MATCH_PLAYERS.length} joueurs à noter · Moyenne actuelle : <span style={{color:'white',fontWeight:600}}>{(Object.values(ratings).reduce((a,b)=>a+b,0)/MATCH_PLAYERS.length).toFixed(1)}</span>
+              {MATCH_PLAYERS.length} joueurs · Moy. : <span style={{color:'white',fontWeight:600}}>{(Object.values(ratings).reduce((a,b)=>a+b,0)/MATCH_PLAYERS.length).toFixed(1)}</span>
             </div>
-            <button
-              onClick={handleSubmit}
-              style={{
-                background:'linear-gradient(135deg,var(--barca-blue),var(--barca-red))',
-                border:'none',color:'white',padding:'10px 24px',borderRadius:'6px',
-                fontSize:'13px',fontWeight:700,fontFamily:'DM Mono,monospace',
-                letterSpacing:'0.06em',cursor:'pointer',
-              }}
-            >
+            <button onClick={() => setSubmitted(true)} style={{
+              background:'linear-gradient(135deg,var(--barca-blue),var(--barca-red))',
+              border:'none',color:'white',padding:'10px 24px',borderRadius:'6px',
+              fontSize:'13px',fontWeight:700,fontFamily:'DM Mono,monospace',
+              letterSpacing:'0.06em',cursor:'pointer',
+            }}>
               VALIDER MES NOTES →
             </button>
           </div>
         ) : (
           <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'12px',flexWrap:'wrap'}}>
             <div style={{fontSize:'12px',color:'#4ade80',fontFamily:'DM Mono,monospace'}}>
-              ✓ Notes enregistrées · Merci pour ta participation !
+              ✓ Notes enregistrées · Merci !
             </div>
-            <button
-              onClick={()=>{setSubmitted(false)}}
-              style={{background:'transparent',border:'1px solid var(--barca-border)',color:'var(--text-muted)',padding:'8px 16px',borderRadius:'4px',fontSize:'12px',fontFamily:'DM Mono,monospace',cursor:'pointer'}}
-            >
+            <button onClick={() => setSubmitted(false)} style={{
+              background:'transparent',border:'1px solid var(--barca-border)',
+              color:'var(--text-muted)',padding:'8px 16px',borderRadius:'4px',
+              fontSize:'12px',fontFamily:'DM Mono,monospace',cursor:'pointer',
+            }}>
               ← Modifier
             </button>
           </div>
