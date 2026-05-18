@@ -1,4 +1,12 @@
 export default function Footer() {
+  const rubriques = [
+    { label:'Actualités',  href:'/actualites'   },
+    { label:'Avant-matchs',href:'/avant-matchs' },
+    { label:'Analyses',    href:'/analyses'     },
+    { label:'Transferts',  href:'/transferts'   },
+    { label:'Effectif',    href:'/effectif'     },
+  ]
+
   return (
     <footer style={{borderTop:'1px solid var(--barca-border)',background:'var(--barca-surface)',marginTop:'40px'}}>
       <div style={{maxWidth:'1280px',margin:'0 auto',padding:'48px 24px 32px'}}>
@@ -9,14 +17,20 @@ export default function Footer() {
           </div>
           <div>
             <div style={{fontFamily:'DM Mono,monospace',fontSize:'10px',letterSpacing:'0.1em',color:'rgba(255,255,255,0.3)',marginBottom:'16px',textTransform:'uppercase'}}>Rubriques</div>
-            {['Actualités','Avant-matchs','Analyses','Transferts'].map(l=>(
-              <a key={l} href="#" style={{display:'block',fontSize:'13px',color:'rgba(255,255,255,0.5)',textDecoration:'none',marginBottom:'10px'}}>{l}</a>
+            {rubriques.map(l=>(
+              <a key={l.label} href={l.href} style={{display:'block',fontSize:'13px',color:'rgba(255,255,255,0.5)',textDecoration:'none',marginBottom:'10px',transition:'color 0.2s'}}
+                onMouseEnter={e=>(e.currentTarget.style.color='white')}
+                onMouseLeave={e=>(e.currentTarget.style.color='rgba(255,255,255,0.5)')}
+              >{l.label}</a>
             ))}
           </div>
           <div>
             <div style={{fontFamily:'DM Mono,monospace',fontSize:'10px',letterSpacing:'0.1em',color:'rgba(255,255,255,0.3)',marginBottom:'16px',textTransform:'uppercase'}}>À propos</div>
             {['Notre équipe','Contact','Mentions légales'].map(l=>(
-              <a key={l} href="#" style={{display:'block',fontSize:'13px',color:'rgba(255,255,255,0.5)',textDecoration:'none',marginBottom:'10px'}}>{l}</a>
+              <a key={l} href="#" style={{display:'block',fontSize:'13px',color:'rgba(255,255,255,0.5)',textDecoration:'none',marginBottom:'10px',transition:'color 0.2s'}}
+                onMouseEnter={e=>(e.currentTarget.style.color='white')}
+                onMouseLeave={e=>(e.currentTarget.style.color='rgba(255,255,255,0.5)')}
+              >{l}</a>
             ))}
           </div>
         </div>
