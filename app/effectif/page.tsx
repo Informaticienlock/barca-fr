@@ -2,6 +2,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import GrilleEffectif from '@/components/GrilleEffectif'
 import RadarJoueur from '@/components/RadarJoueur'
+import StatutContractuel from '@/components/StatutContractuel'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ export default function EffectifPage() {
           <GrilleEffectif />
         </div>
 
-        <div>
+        <div style={{ marginBottom:'56px' }}>
           <div style={{ marginBottom:'20px' }}>
             <h2 className="section-title">Radar de Profil</h2>
             <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>
@@ -43,6 +44,16 @@ export default function EffectifPage() {
             </p>
           </div>
           <RadarJoueur />
+        </div>
+
+        <div>
+          <div style={{ marginBottom:'20px' }}>
+            <h2 className="section-title">Statut Contractuel</h2>
+            <p style={{ fontSize:'13px', color:'var(--text-muted)', marginTop:'6px', marginLeft:'16px', fontFamily:'DM Mono,monospace' }}>
+              Contrats · Clauses libératoires · Valeurs marchandes
+            </p>
+          </div>
+          <StatutContractuel />
         </div>
 
       </div>
