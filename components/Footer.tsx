@@ -1,3 +1,5 @@
+'use client'
+
 export default function Footer() {
   const rubriques = [
     { label:'Actualités',  href:'/actualites'   },
@@ -18,19 +20,17 @@ export default function Footer() {
           <div>
             <div style={{fontFamily:'DM Mono,monospace',fontSize:'10px',letterSpacing:'0.1em',color:'rgba(255,255,255,0.3)',marginBottom:'16px',textTransform:'uppercase'}}>Rubriques</div>
             {rubriques.map(l=>(
-              <a key={l.label} href={l.href} style={{display:'block',fontSize:'13px',color:'rgba(255,255,255,0.5)',textDecoration:'none',marginBottom:'10px',transition:'color 0.2s'}}
-                onMouseEnter={e=>(e.currentTarget.style.color='white')}
-                onMouseLeave={e=>(e.currentTarget.style.color='rgba(255,255,255,0.5)')}
-              >{l.label}</a>
+              <a key={l.label} href={l.href} style={{display:'block',fontSize:'13px',color:'rgba(255,255,255,0.5)',textDecoration:'none',marginBottom:'10px'}}>
+                {l.label}
+              </a>
             ))}
           </div>
           <div>
             <div style={{fontFamily:'DM Mono,monospace',fontSize:'10px',letterSpacing:'0.1em',color:'rgba(255,255,255,0.3)',marginBottom:'16px',textTransform:'uppercase'}}>À propos</div>
             {['Notre équipe','Contact','Mentions légales'].map(l=>(
-              <a key={l} href="#" style={{display:'block',fontSize:'13px',color:'rgba(255,255,255,0.5)',textDecoration:'none',marginBottom:'10px',transition:'color 0.2s'}}
-                onMouseEnter={e=>(e.currentTarget.style.color='white')}
-                onMouseLeave={e=>(e.currentTarget.style.color='rgba(255,255,255,0.5)')}
-              >{l}</a>
+              <a key={l} href="#" style={{display:'block',fontSize:'13px',color:'rgba(255,255,255,0.5)',textDecoration:'none',marginBottom:'10px'}}>
+                {l}
+              </a>
             ))}
           </div>
         </div>
