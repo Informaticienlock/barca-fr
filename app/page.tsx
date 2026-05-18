@@ -19,7 +19,7 @@ export default function Home() {
 
         <div style={{ marginTop: '48px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2 className="section-title">Dernières actualités</h2>
-          <a href="#" style={{ fontSize: '13px', color: 'var(--barca-blue)', fontWeight: 500 }}>Tout voir →</a>
+          <a href="/actualites" style={{ fontSize: '13px', color: 'var(--barca-blue)', fontWeight: 500 }}>Tout voir →</a>
         </div>
 
         {/* Desktop : articles + sidebar côte à côte */}
